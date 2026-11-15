@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عرض شراكة استراتيجية | KAAF Group × Tone Events</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Cairo & IBM Plex Sans Arabic -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome 6 Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        kaaf: {
+                            obsidian: '#060A12',
+                            navy: '#0B1324',
+                            card: '#101B33',
+                            border: '#1E2E4F',
+                            gold: '#D4AF37',
+                            goldLight: '#F3D982',
+                            cyan: '#00B4D8',
+                            cyanLight: '#90E0EF',
+                            emerald: '#10B981',
+                            slateText: '#94A3B8'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        ibm: ['IBM Plex Sans Arabic', 'sans-serif']
+                    },
+                    boxShadow: {
+                        'luxury': '0 25px 50px -12px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.06)',
+                        'gold-glow': '0 0 35px -5px rgba(212, 175, 55, 0.35)',
+                        'cyan-glow': '0 0 35px -5px rgba(0, 180, 216, 0.35)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'IBM Plex Sans Arabic', 'Cairo', sans-serif;
+            background-color: #060A12;
+            color: #F8FAFC;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .font-heading {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #060A12;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1E2E4F;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37;
+        }
+
+        /* Interactive Background Canvas */
+        #ambient-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.65;
+        }
+
+        /* Subtle Ambient Light Orbs */
+        .orb-glow {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(110px);
+            opacity: 0.16;
+            z-index: 0;
+            pointer-events: none;
+            animation: slowDrift 22s ease-in-out infinite alternate;
+        }
+        .orb-1 { top: -15%; right: -5%; width: 600px; height: 600px; background: #D4AF37; }
+        .orb-2 { bottom: 5%; left: -10%; width: 650px; height: 650px; background: #00B4D8; animation-delay: -7s; }
+
+        @keyframes slowDrift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-40px, 60px) scale(1.08); }
+        }
+
+        /* Editorial Luxury Cards */
+        .editorial-card {
+            background: linear-gradient(145deg, rgba(16, 27, 51, 0.82) 0%, rgba(9, 15, 29, 0.94) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(16px);
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .editorial-card:hover {
+            border-color: rgba(212, 175, 55, 0.45);
+            transform: translateY(-4px);
+            box-shadow: 0 25px 45px -15px rgba(0, 0, 0, 0.8), 0 0 25px -5px rgba(212, 175, 55, 0.2);
+        }
+
+        .editorial-card-cyan {
+            background: linear-gradient(145deg, rgba(13, 31, 56, 0.82) 0%, rgba(8, 17, 32, 0.94) 100%);
+            border: 1px solid rgba(0, 180, 216, 0.22);
+            backdrop-filter: blur(16px);
+            transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .editorial-card-cyan:hover {
+            border-color: rgba(0, 180, 216, 0.65);
+            transform: translateY(-4px);
+            box-shadow: 0 25px 45px -15px rgba(0, 0, 0, 0.8), 0 0 25px -5px rgba(0, 180, 216, 0.25);
+        }
+
+        /* Top Reading Progress Bar */
+        #reading-progress {
+            height: 3px;
+            background: linear-gradient(90deg, #D4AF37 0%, #F3D982 50%, #00B4D8 100%);
+            width: 0%;
+            transition: width 0.15s ease-out;
+        }
+
+        /* Interactive Tab Active States */
+        .tab-btn.active {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.2) 0%, rgba(212, 175, 55, 0.05) 100%);
+            border-color: #D4AF37;
+            color: #F3D982;
+        }
+
+        .journey-node.active {
+            border-color: #00B4D8;
+            background: rgba(0, 180, 216, 0.15);
+            transform: scale(1.04);
+            box-shadow: 0 0 25px -5px rgba(0, 180, 216, 0.4);
+        }
+
+        /* Floating Button Subtle Animation */
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-7px); }
+        }
+        .float-anim { animation: gentleFloat 4s ease-in-out infinite; }
+        .float-anim-delayed { animation: gentleFloat 4s ease-in-out infinite 1.2s; }
+
+        /* Side Dot Navigation */
+        .side-dot.active span {
+            background-color: #D4AF37;
+            transform: scale(1.4);
+            box-shadow: 0 0 10px #D4AF37;
+        }
+        .side-dot.active .dot-label {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        @media print {
+            body { background: #FFFFFF !important; color: #0F172A !important; }
+            #ambient-canvas, .orb-glow, #floating-kaaf, #floating-wa, #side-nav, header { display: none !important; }
+            .editorial-card, .editorial-card-cyan {
+                background: #FFFFFF !important;
+                border: 1px solid #CBD5E1 !important;
+                box-shadow: none !important;
+                color: #0F172A !important;
+            }
+            .text-white, .text-gray-200, .text-gray-300, .text-kaaf-slateText { color: #1E293B !important; }
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-kaaf-gold selection:text-kaaf-obsidian">
+
+    <!-- Ambient Background Elements -->
+    <canvas id="ambient-canvas"></canvas>
+    <div class="orb-glow orb-1"></div>
+    <div class="orb-glow orb-2"></div>
+
+    <!-- Top Progress & Sticky Header -->
+    <header class="sticky top-0 z-50 bg-kaaf-obsidian/85 backdrop-blur-xl border-b border-white/10">
+        <div id="reading-progress"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 py-3.5 flex items-center justify-between">
+            <!-- Brand Identity -->
+            <a href="https://kaafmarketing.sa/" target="_blank" class="flex items-center gap-3.5 group">
+                <div class="w-10 h-10 rounded-xl overflow-hidden border border-kaaf-gold/50 p-0.5 bg-black shadow-gold-glow transition-transform group-hover:scale-105">
+                    <img src="https://i.ibb.co/qKTyhpv/Whats-App-Image-2026-08-26-at-11-29-58.jpg" alt="KAAF Group Official Logo" class="w-full h-full object-cover rounded-lg">
+                </div>
+                <div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-base font-black text-white tracking-wide font-heading">KAAF <span class="text-kaaf-gold">GROUP</span></span>
+                        <span class="text-white/30">×</span>
+                        <span class="text-sm font-bold text-kaaf-cyanLight font-heading">TONE EVENTS</span>
+                    </div>
+                    <p class="text-[10px] text-kaaf-slateText tracking-wider uppercase">Strategic Growth & 4Ps Partnership</p>
+                </div>
+            </a>
+
+            <!-- Quick Desktop Section Links -->
+            <nav class="hidden lg:flex items-center gap-6 text-xs font-semibold text-gray-300">
+                <a href="#slide-2" class="hover:text-kaaf-gold transition">الرؤية الاستراتيجية</a>
+                <a href="#slide-5" class="hover:text-kaaf-gold transition">تحليل الحضور</a>
+                <a href="#slide-7" class="hover:text-kaaf-gold transition">إطار 4Ps</a>
+                <a href="#slide-8" class="hover:text-kaaf-gold transition">مزايا KAAF</a>
+                <a href="#slide-9" class="hover:text-kaaf-gold transition">رحلة العميل</a>
+                <a href="#slide-11" class="hover:text-kaaf-gold transition">خارطة 90 يوماً</a>
+            </nav>
+
+            <!-- Executive Action Button -->
+            <a href="#slide-14" class="px-4 py-2 rounded-xl bg-gradient-to-l from-kaaf-gold to-amber-500 text-kaaf-obsidian font-bold text-xs hover:brightness-110 transition shadow-gold-glow flex items-center gap-2">
+                <i class="fa-regular fa-handshake"></i>
+                <span>طلب اجتماع استراتيجي</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Interactive Side Progress Navigation (Desktop) -->
+    <aside id="side-nav" class="hidden xl:flex fixed left-6 top-1/2 -translate-y-1/2 z-40 flex-col gap-3">
+        <a href="#slide-1" class="side-dot group flex items-center gap-2.5" data-target="slide-1">
+            <span class="w-2.5 h-2.5 rounded-full bg-white/25 transition-all duration-300 group-hover:bg-kaaf-gold"></span>
+            <span class="dot-label text-[10px] font-bold text-kaaf-goldLight opacity-0 -translate-x-2 transition-all duration-300 bg-kaaf-navy/90 px-2 py-0.5 rounded border border-white/10">01. الغلاف</span>
+        </a>
+        <a href="#slide-2" class="side-dot group flex items-center gap-2.5" data-target="slide-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-white/25 transition-all duration-300 group-hover:bg-kaaf-gold"></span>
+            <span class="dot-label text-[10px] font-bold text-kaaf-goldLight opacity-0 -translate-x-2 transition-all duration-300 bg-kaaf-navy/90 px-2 py-0.5 rounded border border-white/10">02. الرؤية التنفيذية</span>
+        </a>
+        <a href="#slide-3" class="side-dot group flex items-center gap-2.5" data-target="slide-3">
+            <span class="w-2.5 h-2.5 rounded-full bg-white/25 transition-all duration-300 group-hover:bg-kaaf-gold"></span>
+            <span class="dot-label text-[10px] font-bold text-kaaf-goldLight opacity-0 -translate-x-2 transition-all duration-300 bg-kaaf-navy/90 px-2 py-0.5 rounded border border-white/10">03. فهم Tone Events</span>
+        </a>
+        <a href="#slide-4" class="side-dot group flex items-center gap-2.5" data-target="slide-4">
+            <span class="w-2.5 h-2.5 rounded-full bg-white/25 transition-all duration-300 group-hover:bg-kaaf-gold"></span>
+            <span class="dot-label text-[10px] font-bold text-kaaf-goldLight opacity-0 -translate-x-2 transition-all duration-300 bg-kaaf-navy/90 px-2 py-0.5 rounded border border-white/10">04. فرص السوق</span>
+        </a>
+        <a href="#slide-5" class="side-dot group flex items-center gap-2.5" data-target="slide-5">
+            <span class="w-2.5 h-2.5 rounded-full bg-white/25 transition-all duration-300 group-hover:bg-kaaf-gold"></span>
+            <span class="dot-label text-[10px] font-bold text-kaaf-goldLight opacity-0 -translate-x-2 transition-all duration-300 bg-kaaf-navy/90 px-2 py-0.5 rounded border border-white/10">05. الحضور الرقمي</span>
+        </a>
+        <a href="#slide-6" class="side-dot group flex items-center gap-2.5" data-target="slide-6">
+            <span class="w-2.5 h-2.5 rounded-full bg-white/25 transition-all duration-300 group-hover:bg-kaaf-gold"></span>
+            <span class="dot-label text-[10px] font-bold text-kaaf-goldLight opacity-0 -translate-x-2 transition-all duration-300 bg-kaaf-navy/90 px-2 py-0.5 rounded border border-white/10">06. التموضع</span>
+        </a>
+        <a href="#slide-7" class="side-dot group flex items-center gap-2.5" data-target="slide-7">
+            <span class="w-2.5 h-2.5 rounded-full bg-white/25 transition-all duration-300 group-hover:bg-kaaf-gold"></span>
+            <span class="dot-label text-[10px] font-bold text-kaaf-goldLight opacity-0 -translate-x-2 transition-all duration-300 bg-kaaf-navy/90 px-2 py-0.5 rounded border border-white/10">07. إطار 4Ps</span>
+        </a>
+        <a href="#slide-8" class="side-dot group flex items-center gap-2.5" data-target="slide-8">
+            <span class="w-2.5 h-2.5 rounded-full bg-white/25 transition-all duration-300 group-hover:bg-kaaf-gold"></span>
+            <span class="dot-label text-[10px] font-bold text-kaaf-goldLight opacity-0 -translate-x-2 transition-all duration-300 bg-kaaf-navy/90 px-2 py-0.5 rounded border border-white/10">08. قيمة KAAF</span>
+        </a>
+        <a href="#slide-9" class="side-dot group flex items-center gap-2.5" data-target="slide-9">
+            <span class="w-2.5 h-2.5 rounded-full bg-white/25 transition-all duration-300 group-hover:bg-kaaf-gold"></span>
+            <span class="dot-label text-[10px] font-bold text-kaaf-goldLight opacity-0 -translate-x-2 transition-all duration-300 bg-kaaf-navy/90 px-2 py-0.5 rounded border border-white/10">09. رحلة العميل</span>
+        </a>
+        <a href="#slide-10" class="side-dot group flex items-center gap-2.5" data-target="slide-10">
+            <span class="w-2.5 h-2.5 rounded-full bg-white/25 transition-all duration-300 group-hover:bg-kaaf-gold"></span>
+            <span class="dot-label text-[10px] font-bold text-kaaf-goldLight opacity-0 -translate-x-2 transition-all duration-300 bg-kaaf-navy/90 px-2 py-0.5 rounded border border-white/10">10. المتابعة البيعية</span>
+        </a>
+        <a href="#slide-11" class="side-dot group flex items-center gap-2.5" data-target="slide-11">
+            <span class="w-2.5 h-2.5 rounded-full bg-white/25 transition-all duration-300 group-hover:bg-kaaf-gold"></span>
+            <span class="dot-label text-[10px] font-bold text-kaaf-goldLight opacity-0 -translate-x-2 transition-all duration-300 bg-kaaf-navy/90 px-2 py-0.5 rounded border border-white/10">11. خارطة 90 يوماً</span>
+        </a>
+        <a href="#slide-12" class="side-dot group flex items-center gap-2.5" data-target="slide-12">
+            <span class="w-2.5 h-2.5 rounded-full bg-white/25 transition-all duration-300 group-hover:bg-kaaf-gold"></span>
+            <span class="dot-label text-[10px] font-bold text-kaaf-goldLight opacity-0 -translate-x-2 transition-all duration-300 bg-kaaf-navy/90 px-2 py-0.5 rounded border border-white/10">12. القياس KPIs</span>
+        </a>
+        <a href="#slide-13" class="side-dot group flex items-center gap-2.5" data-target="slide-13">
+            <span class="w-2.5 h-2.5 rounded-full bg-white/25 transition-all duration-300 group-hover:bg-kaaf-gold"></span>
+            <span class="dot-label text-[10px] font-bold text-kaaf-goldLight opacity-0 -translate-x-2 transition-all duration-300 bg-kaaf-navy/90 px-2 py-0.5 rounded border border-white/10">13. رؤية الشراكة</span>
+        </a>
+        <a href="#slide-14" class="side-dot group flex items-center gap-2.5" data-target="slide-14">
+            <span class="w-2.5 h-2.5 rounded-full bg-white/25 transition-all duration-300 group-hover:bg-kaaf-gold"></span>
+            <span class="dot-label text-[10px] font-bold text-kaaf-goldLight opacity-0 -translate-x-2 transition-all duration-300 bg-kaaf-navy/90 px-2 py-0.5 rounded border border-white/10">14. الخاتمة</span>
+        </a>
+    </aside>
+
+    <!-- Floating Action Buttons -->
+    <aside id="floating-kaaf" class="fixed bottom-6 right-6 z-50">
+        <a href="https://kaafmarketing.sa/" target="_blank" title="الموقع الرسمي لـ KAAF Group" class="block w-14 h-14 rounded-full overflow-hidden border-2 border-kaaf-gold/80 p-0.5 bg-black shadow-gold-glow float-anim hover:scale-110 transition-transform">
+            <img src="https://i.ibb.co/qKTyhpv/Whats-App-Image-2026-08-26-at-11-29-58.jpg" alt="KAAF Group" class="w-full h-full object-cover rounded-full">
+        </a>
+    </aside>
+
+    <aside id="floating-wa" class="fixed bottom-6 left-6 z-50">
+        <a href="https://wa.me/966579346395?text=السلام%20عليكم،%20نرغب%20في%20مناقشة%20عرض%20الشراكة%20الاستراتيجية%20بين%20KAAF%20و%20Tone%20Events" target="_blank" title="تواصل مباشر عبر واتساب" class="w-14 h-14 rounded-full bg-[#25D366] text-white flex items-center justify-center border-2 border-emerald-200 shadow-lg float-anim-delayed hover:scale-110 transition-transform">
+            <i class="fa-brands fa-whatsapp text-3xl"></i>
+        </a>
+    </aside>
+
+    <!-- MAIN CONTENT WRAPPER -->
+    <main class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-24">
+
+        <!-- ========================================================================= -->
+        <!-- 01. PREMIUM COVER — KAAF × TONE EVENTS                                    -->
+        <!-- ========================================================================= -->
+        <section id="slide-1" class="editorial-card rounded-[32px] p-8 sm:p-14 lg:p-16 relative overflow-hidden shadow-luxury">
+            <div class="absolute top-0 right-0 left-0 h-1 bg-gradient-to-l from-kaaf-gold via-kaaf-goldLight to-kaaf-cyan"></div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                <div class="lg:col-span-8 space-y-6">
+                    <div class="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-kaaf-gold/15 border border-kaaf-gold/40 text-kaaf-goldLight text-xs font-bold">
+                        <span class="w-2 h-2 rounded-full bg-kaaf-gold animate-ping"></span>
+                        <span>STRATEGIC GROWTH PARTNERSHIP • 4Ps FRAMEWORK</span>
+                    </div>
+
+                    <div class="space-y-3">
+                        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white leading-tight">
+                            من تنظيم الفعاليات
+                            <span class="block text-transparent bg-clip-text bg-gradient-to-l from-kaaf-goldLight via-kaaf-gold to-kaaf-cyanLight mt-1">
+                                إلى بناء فرص تجارية مستمرة
+                            </span>
+                        </h1>
+                        <p class="text-base sm:text-xl font-bold text-gray-300 pt-1">
+                            عرض شراكة تسويقية وتجارية مقدم من <span class="text-kaaf-goldLight">KAAF Group</span> إلى <span class="text-white">Tone Events</span>
+                        </p>
+                    </div>
+
+                    <p class="text-sm sm:text-base text-kaaf-slateText leading-relaxed max-w-2xl">
+                        منظومة نمو متكاملة تربط بين الإبداع في تنفيذ الفعاليات، والتموضع الرقمي الاحترافي، والمتابعة البيعية المباشرة لتحويل كل حدث ناجح إلى مصدر مستدام للعلاقات والشراكات التجارية.
+                    </p>
+
+                    <div class="pt-4 flex flex-wrap items-center gap-4">
+                        <a href="#slide-2" class="px-6 py-3.5 rounded-2xl bg-kaaf-gold text-kaaf-obsidian font-extrabold text-xs sm:text-sm hover:bg-kaaf-goldLight transition shadow-gold-glow flex items-center gap-2">
+                            <span>استكشاف الرؤية الاستراتيجية</span>
+                            <i class="fa-solid fa-arrow-down text-xs"></i>
+                        </a>
+                        <a href="#slide-7" class="px-6 py-3.5 rounded-2xl bg-white/5 border border-white/15 text-white font-bold text-xs sm:text-sm hover:bg-white/10 transition flex items-center gap-2">
+                            <i class="fa-solid fa-layer-group text-kaaf-cyan"></i>
+                            <span>استراتيجية 4Ps التفاعلية</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Right Editorial Monogram Box -->
+                <div class="lg:col-span-4">
+                    <div class="rounded-3xl bg-kaaf-obsidian/90 border border-white/10 p-7 space-y-6 relative">
+                        <div class="flex items-center justify-between border-b border-white/10 pb-4">
+                            <span class="text-[11px] font-bold text-kaaf-goldLight tracking-widest uppercase">EXECUTIVE BRIEF</span>
+                            <i class="fa-solid fa-compass-drafting text-kaaf-gold text-lg"></i>
+                        </div>
+
+                        <div class="space-y-4 text-xs">
+                            <div class="flex justify-between items-center py-2 border-b border-white/5">
+                                <span class="text-kaaf-slateText">الشريك الاستراتيجي</span>
+                                <span class="font-bold text-white">KAAF Group</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-white/5">
+                                <span class="text-kaaf-slateText">الجهة المستهدفة</span>
+                                <span class="font-bold text-kaaf-goldLight">Tone Events</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2 border-b border-white/5">
+                                <span class="text-kaaf-slateText">منهجية العمل</span>
+                                <span class="font-bold text-kaaf-cyanLight">4Ps + Sales Enablement</span>
+                            </div>
+                            <div class="flex justify-between items-center py-2">
+                                <span class="text-kaaf-slateText">مبادرة البنية الرقمية</span>
+                                <span class="font-bold text-kaaf-emerald">موقع إلكتروني متكامل</span>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-kaaf-gold/10 border border-kaaf-gold/25 text-center">
+                            <span class="text-[11px] font-bold text-kaaf-goldLight block">Beyond Events. Towards Growth.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 02. EXECUTIVE VISION — WHY THIS PARTNERSHIP?                              -->
+        <!-- ========================================================================= -->
+        <section id="slide-2" class="space-y-6">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <div class="flex items-center gap-3">
+                    <span class="text-xs font-black text-kaaf-gold font-mono">02 / 14</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white">الرؤية التنفيذية: لماذا هذه الشراكة؟</h2>
+                </div>
+                <span class="text-xs text-kaaf-slateText hidden sm:inline">Executive Vision</span>
+            </div>
+
+            <div class="editorial-card rounded-3xl p-8 sm:p-10 space-y-8">
+                <div class="max-w-3xl space-y-3">
+                    <h3 class="text-xl sm:text-2xl font-bold text-kaaf-goldLight leading-snug">
+                        نجاح الفعالية على أرض الواقع هو البداية فقط؛ القيمة الحقيقية تبدأ مما بعد الحدث.
+                    </h3>
+                    <p class="text-sm sm:text-base text-gray-300 leading-relaxed">
+                        في قطاع تنظيم الفعاليات، يُبذل جهد استثنائي في التخطيط والتنفيذ، لكن غالباً ما يتوقف الأثر التجاري بمجرد إغلاق أبواب القاعة. رؤية <strong class="text-white">KAAF Group</strong> ترتكز على تحويل كل فعالية تنفذها <strong class="text-white">Tone Events</strong> إلى محرك نمو مستمر يغذي العلامة التجارية بالثقة والفرص الجديدة.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 text-xs">
+                    <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2">
+                        <div class="w-9 h-9 rounded-xl bg-kaaf-gold/15 text-kaaf-gold flex items-center justify-center text-base">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h4 class="font-bold text-white">محتوى يعزز الثقة</h4>
+                        <p class="text-kaaf-slateText leading-relaxed">توثيق احترافي يبرهن لصناع القرار على قدرة التنفيذ العالية.</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2">
+                        <div class="w-9 h-9 rounded-xl bg-kaaf-cyan/15 text-kaaf-cyan flex items-center justify-center text-base">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                        <h4 class="font-bold text-white">مادة تثبت الجودة</h4>
+                        <p class="text-kaaf-slateText leading-relaxed">إبراز التفاصيل الدقيقة والإخراج البصري لكل حدث.</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2">
+                        <div class="w-9 h-9 rounded-xl bg-kaaf-emerald/15 text-kaaf-emerald flex items-center justify-center text-base">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <h4 class="font-bold text-white">وصول لعملاء جدد</h4>
+                        <p class="text-kaaf-slateText leading-relaxed">استقطاب شركات وعلامات تجارية تبحث عن شريك موثوق.</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2">
+                        <div class="w-9 h-9 rounded-xl bg-purple-500/15 text-purple-400 flex items-center justify-center text-base">
+                            <i class="fa-solid fa-network-wired"></i>
+                        </div>
+                        <h4 class="font-bold text-white">فتح شراكات جديدة</h4>
+                        <p class="text-kaaf-slateText leading-relaxed">توسيع شبكة العلاقات مع الجهات المؤسسية والرعاة.</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2">
+                        <div class="w-9 h-9 rounded-xl bg-amber-500/15 text-amber-400 flex items-center justify-center text-base">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <h4 class="font-bold text-white">تدفق فرص مستمر</h4>
+                        <p class="text-kaaf-slateText leading-relaxed">ربط التسويق بالمتابعة البيعية لتحويل الاهتمام إلى اجتماعات.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 03. UNDERSTANDING TONE EVENTS                                             -->
+        <!-- ========================================================================= -->
+        <section id="slide-3" class="space-y-6">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <div class="flex items-center gap-3">
+                    <span class="text-xs font-black text-kaaf-cyan font-mono">03 / 14</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white">فهم طبيعة أعمال Tone Events</h2>
+                </div>
+                <span class="text-xs text-kaaf-slateText hidden sm:inline">Understanding Tone Events</span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <div class="lg:col-span-7 editorial-card-cyan rounded-3xl p-8 space-y-5">
+                    <h3 class="text-xl font-bold text-white">صناعة التجارب المتكاملة والفعاليات ذات الأثر</h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        تنشط <strong class="text-kaaf-cyanLight">Tone Events</strong> في قطاع تنظيم وإدارة الفعاليات والتجارب الحية، حيث تجمع بين التخطيط الميداني والتنفيذ الإبداعي لتقديم أحداث تعكس هوية الجهات المنظمة وتلبي تطلعات جمهورها.
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs">
+                        <div class="p-3.5 rounded-2xl bg-black/40 border border-white/10 flex items-center gap-3">
+                            <i class="fa-solid fa-building-columns text-kaaf-cyan text-base"></i>
+                            <span class="font-semibold text-gray-200">الفعاليات المؤسسية واللقاءات الرسمية</span>
+                        </div>
+                        <div class="p-3.5 rounded-2xl bg-black/40 border border-white/10 flex items-center gap-3">
+                            <i class="fa-solid fa-microphone-lines text-kaaf-cyan text-base"></i>
+                            <span class="font-semibold text-gray-200">المؤتمرات والندوات والمعارض</span>
+                        </div>
+                        <div class="p-3.5 rounded-2xl bg-black/40 border border-white/10 flex items-center gap-3">
+                            <i class="fa-solid fa-rocket text-kaaf-cyan text-base"></i>
+                            <span class="font-semibold text-gray-200">إطلاق المنتجات والعلامات التجارية</span>
+                        </div>
+                        <div class="p-3.5 rounded-2xl bg-black/40 border border-white/10 flex items-center gap-3">
+                            <i class="fa-solid fa-video text-kaaf-cyan text-base"></i>
+                            <span class="font-semibold text-gray-200">التغطيات والتوثيق الإعلامي والإنتاج</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Real Portfolio Showcase Placeholder Box -->
+                <div class="lg:col-span-5 editorial-card rounded-3xl p-8 flex flex-col justify-between space-y-5">
+                    <div class="space-y-2">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-kaaf-gold/15 text-kaaf-goldLight text-[11px] font-bold">
+                            <i class="fa-solid fa-folder-open"></i>
+                            <span>أرشيف الأعمال الحقيقي</span>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">مساحة مخصصة لأعمال Tone Events الفعلية</h4>
+                        <p class="text-xs text-kaaf-slateText leading-relaxed">
+                            حرصاً على المصداقية التامة وعدم استخدام أي صور عشوائية لا تمثل الشركة، تم تخصيص هذا الإطار لاستعراض لقطات ومشاريع Tone Events الحقيقية فور مشاركة ملف الأعمال (Portfolio) والروابط الكاملة.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-3 text-center text-[11px]">
+                        <a href="https://www.instagram.com/toneevent" target="_blank" class="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-kaaf-gold transition flex flex-col items-center gap-1.5">
+                            <i class="fa-brands fa-instagram text-xl text-pink-400"></i>
+                            <span class="font-bold text-white">@toneevent</span>
+                            <span class="text-kaaf-slateText">حساب إنستغرام</span>
+                        </a>
+                        <a href="https://www.tiktok.com/@toneevents?_r=1" target="_blank" class="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-kaaf-cyan transition flex flex-col items-center gap-1.5">
+                            <i class="fa-brands fa-tiktok text-xl text-kaaf-cyan"></i>
+                            <span class="font-bold text-white">@toneevents</span>
+                            <span class="text-kaaf-slateText">حساب تيك توك</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 04. MARKET OPPORTUNITY                                                    -->
+        <!-- ========================================================================= -->
+        <section id="slide-4" class="space-y-6">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <div class="flex items-center gap-3">
+                    <span class="text-xs font-black text-kaaf-gold font-mono">04 / 14</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white">فرص النمو التجاري في السوق</h2>
+                </div>
+                <span class="text-xs text-kaaf-slateText hidden sm:inline">Market Opportunity & B2B Segments</span>
+            </div>
+
+            <div class="editorial-card rounded-3xl p-8 space-y-6">
+                <p class="text-sm text-gray-300 leading-relaxed max-w-3xl">
+                    يشهد سوق الفعاليات والمؤتمرات والأنشطة التسويقية نمواً متسارعاً مدفوعاً بتوسع الشركات والعلامات التجارية في إطلاق مبادراتها ومنتجاتها. الفرصة الحقيقية لـ <strong class="text-white">Tone Events</strong> تكمن في الانتقال من الاعتماد على العلاقات المباشرة فقط إلى بناء <strong class="text-kaaf-goldLight">قنوات استقطاب مؤسسية منظمة</strong>.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-xs">
+                    <div class="p-5 rounded-2xl bg-black/40 border border-white/10 space-y-2.5">
+                        <span class="text-kaaf-gold font-bold text-sm block">1. الشركات والعلامات التجارية</span>
+                        <p class="text-kaaf-slateText leading-relaxed">
+                            الشركات التي تطلق منتجات جديدة، أو تنظم فعاليات تفاعلية وتجارب للعملاء وتبحث عن شريك ينفذ الرؤية الإبداعية بدقة.
+                        </p>
+                    </div>
+
+                    <div class="p-5 rounded-2xl bg-black/40 border border-white/10 space-y-2.5">
+                        <span class="text-kaaf-cyan font-bold text-sm block">2. الجهات والمؤسسات والهيئات</span>
+                        <p class="text-kaaf-slateText leading-relaxed">
+                            الجهات التي تقيم ملتقيات دورية، ورش عمل، ومؤتمرات وتتطلب إدارة متكاملة للتنظيم والتغطية الإعلامية.
+                        </p>
+                    </div>
+
+                    <div class="p-5 rounded-2xl bg-black/40 border border-white/10 space-y-2.5">
+                        <span class="text-kaaf-emerald font-bold text-sm block">3. إدارات التسويق والاتصال المؤسسي</span>
+                        <p class="text-kaaf-slateText leading-relaxed">
+                            صناع القرار داخل الإدارات التسويقية الذين يبحثون عن جهة تنفيذية ترفع عنهم عبء التفاصيل التشغيلية.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 05. CURRENT DIGITAL PRESENCE ANALYSIS                                     -->
+        <!-- ========================================================================= -->
+        <section id="slide-5" class="space-y-6">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <div class="flex items-center gap-3">
+                    <span class="text-xs font-black text-kaaf-cyan font-mono">05 / 14</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white">تحليل الحضور الرقمي الحالي وفرص التطوير</h2>
+                </div>
+                <span class="text-xs text-kaaf-slateText hidden sm:inline">Digital Presence Assessment</span>
+            </div>
+
+            <div class="editorial-card-cyan rounded-3xl p-8 space-y-6">
+                <!-- Transparency Note -->
+                <div class="p-4 rounded-2xl bg-kaaf-gold/10 border border-kaaf-gold/30 flex items-start gap-3 text-xs">
+                    <i class="fa-solid fa-circle-info text-kaaf-gold text-base mt-0.5"></i>
+                    <div class="space-y-1">
+                        <strong class="text-kaaf-goldLight block">ملاحظة منهجية حول التحليل الرقمي:</strong>
+                        <p class="text-gray-300 leading-relaxed">
+                            نظراً لقيود الوصول المباشر لبعض تفاصيل الوسائط والبيانات الداخلية على منصتي TikTok وInstagram دون تسجيل دخول، فإن التقييم التالي يركز على المحاور الاستراتيجية الهيكلية التي ترفع كفاءة أي شركة فعاليات، وسيتم استكمال التحليل التفصيلي فور تزويدنا بروابط ومواد الأعمال الكاملة.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+                    <div class="p-5 rounded-2xl bg-black/40 border border-white/10 space-y-3">
+                        <h4 class="text-sm font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-magnifying-glass-chart text-kaaf-cyan"></i>
+                            نقاط التطوير في عرض الخدمات والمحتوى
+                        </h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-angle-left text-kaaf-cyan mt-1"></i> <span>الحاجة إلى إبراز نطاق الخدمات بوضوح للشركات (B2B) وليس الاكتفاء بلقطات عامة.</span></li>
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-angle-left text-kaaf-cyan mt-1"></i> <span>توحيد الهوية البصرية للمحتوى والمونتاج ليعكس مستوى الفخامة والاحترافية.</span></li>
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-angle-left text-kaaf-cyan mt-1"></i> <span>إظهار كواليس التجهيز والتنفيذ لإبراز خبرة الفريق وقدرته على إدارة التفاصيل.</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="p-5 rounded-2xl bg-black/40 border border-white/10 space-y-3">
+                        <h4 class="text-sm font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-route text-kaaf-gold"></i>
+                            فجوة التحويل الرقمي (Conversion Gap)
+                        </h4>
+                        <ul class="space-y-2 text-gray-300">
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-angle-left text-kaaf-gold mt-1"></i> <span>غياب وجهة رقمية مركزية (موقع إلكتروني متكامل) تستقبل صناع القرار وتعرض سابقة الأعمال.</span></li>
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-angle-left text-kaaf-gold mt-1"></i> <span>الحاجة لمسار واضح يحوّل مشاهد الفيديو على TikTok أو Instagram إلى طلب عرض سعر أو اجتماع.</span></li>
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-angle-left text-kaaf-gold mt-1"></i> <span>ضرورة وجود متابعة بيعية منظمة للاستفسارات الواردة عبر القنوات الرقمية.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 06. STRATEGIC POSITIONING                                                 -->
+        <!-- ========================================================================= -->
+        <section id="slide-6" class="space-y-6">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <div class="flex items-center gap-3">
+                    <span class="text-xs font-black text-kaaf-gold font-mono">06 / 14</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white">التموضع الاستراتيجي المقترح (Strategic Positioning)</h2>
+                </div>
+                <span class="text-xs text-kaaf-slateText hidden sm:inline">Brand Positioning</span>
+            </div>
+
+            <div class="editorial-card rounded-3xl p-8 sm:p-10 text-center space-y-6">
+                <span class="text-xs font-bold text-kaaf-gold uppercase tracking-widest">PROPOSED MARKET POSITIONING</span>
+                <h3 class="text-2xl sm:text-3xl font-black text-white max-w-3xl mx-auto leading-relaxed">
+                    "الشريك التنفيذي والإبداعي لصناعة التجارب والفعاليات المؤسسية المتكاملة"
+                </h3>
+                <p class="text-sm text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                    نقل صورة <strong class="text-white">Tone Events</strong> في ذهن العميل من مجرد منفذ لخدمات متفرقة إلى <strong class="text-kaaf-goldLight">جهة استراتيجية تدير التجربة بالكامل</strong>؛ بدءاً من الفكرة والتخطيط، مروراً بالإخراج والتنفيذ الميداني، وصولاً للتوثيق الإعلامي الاحترافي.
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 text-xs text-right">
+                    <div class="p-4 rounded-2xl bg-white/5 border border-white/10">
+                        <span class="text-kaaf-slateText block mb-1">من:</span>
+                        <strong class="text-gray-300">تنفيذ فعاليات عند الطلب فقط</strong>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-kaaf-gold/15 border border-kaaf-gold/40">
+                        <span class="text-kaaf-goldLight block mb-1">إلى:</span>
+                        <strong class="text-white">شريك استراتيجي لبناء التجارب المؤسسية</strong>
+                    </div>
+                    <div class="p-4 rounded-2xl bg-kaaf-cyan/15 border border-kaaf-cyan/40">
+                        <span class="text-kaaf-cyanLight block mb-1">الأثر التجاري:</span>
+                        <strong class="text-white">رفع ثقة الشركات الكبرى وتسهيل التعاقد</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 07. THE 4Ps STRATEGY — INTERACTIVE EXPLORER                               -->
+        <!-- ========================================================================= -->
+        <section id="slide-7" class="space-y-6">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <div class="flex items-center gap-3">
+                    <span class="text-xs font-black text-kaaf-gold font-mono">07 / 14</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white">العمود الفقري للاستراتيجية: إطار 4Ps التفاعلي</h2>
+                </div>
+                <span class="text-xs text-kaaf-slateText hidden sm:inline">Interactive 4Ps Framework</span>
+            </div>
+
+            <!-- Interactive 4Ps Selector Tabs -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+                <button onclick="switchP('p1')" id="btn-p1" class="tab-btn active p-4 rounded-2xl border border-white/15 bg-kaaf-card/80 text-right transition flex items-center justify-between">
+                    <div>
+                        <span class="text-[10px] font-mono text-kaaf-gold block">P1 • PRODUCT</span>
+                        <strong class="text-sm sm:text-base font-black">المنتج والخدمة</strong>
+                    </div>
+                    <i class="fa-solid fa-cubes text-lg text-kaaf-gold"></i>
+                </button>
+
+                <button onclick="switchP('p2')" id="btn-p2" class="tab-btn p-4 rounded-2xl border border-white/15 bg-kaaf-card/80 text-right transition flex items-center justify-between text-gray-300 hover:text-white">
+                    <div>
+                        <span class="text-[10px] font-mono text-kaaf-cyan block">P2 • PRICE</span>
+                        <strong class="text-sm sm:text-base font-black">التسعير والقيمة</strong>
+                    </div>
+                    <i class="fa-solid fa-gem text-lg text-kaaf-cyan"></i>
+                </button>
+
+                <button onclick="switchP('p3')" id="btn-p3" class="tab-btn p-4 rounded-2xl border border-white/15 bg-kaaf-card/80 text-right transition flex items-center justify-between text-gray-300 hover:text-white">
+                    <div>
+                        <span class="text-[10px] font-mono text-kaaf-emerald block">P3 • PLACE</span>
+                        <strong class="text-sm sm:text-base font-black">الوصول والتواجد</strong>
+                    </div>
+                    <i class="fa-solid fa-globe text-lg text-kaaf-emerald"></i>
+                </button>
+
+                <button onclick="switchP('p4')" id="btn-p4" class="tab-btn p-4 rounded-2xl border border-white/15 bg-kaaf-card/80 text-right transition flex items-center justify-between text-gray-300 hover:text-white">
+                    <div>
+                        <span class="text-[10px] font-mono text-purple-400 block">P4 • PROMOTION</span>
+                        <strong class="text-sm sm:text-base font-black">الترويج والانتشار</strong>
+                    </div>
+                    <i class="fa-solid fa-bullhorn text-lg text-purple-400"></i>
+                </button>
+            </div>
+
+            <!-- Interactive 4Ps Content Display -->
+            <div class="editorial-card rounded-3xl p-8 sm:p-10 min-h-[340px]">
+
+                <!-- P1 Content -->
+                <div id="content-p1" class="p-panel space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
+                        <div>
+                            <span class="text-xs font-bold text-kaaf-gold uppercase">P1 — PRODUCT | هندسة وتقديم الخدمات</span>
+                            <h3 class="text-xl sm:text-2xl font-black text-white mt-1">تحويل الخدمات التشغيلية إلى حلول واضحة سهلة الطلب</h3>
+                        </div>
+                    </div>
+
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        نعمل على إعادة هيكلة طريقة عرض خدمات <strong class="text-white">Tone Events</strong> بحيث يفهم العميل المؤسسي بوضوح نطاق كل خدمة وقيمتها، مع بناء مسار محتوى مستقل يبرز جودة التنفيذ والتجربة في كل مسار:
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+                        <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-1.5">
+                            <strong class="text-kaaf-goldLight block">تنظيم وإدارة الفعاليات المتكاملة</strong>
+                            <p class="text-kaaf-slateText">إدارة شاملة من التخطيط واللوجستيات وحتى الإشراف الميداني.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-1.5">
+                            <strong class="text-kaaf-goldLight block">الفعاليات المؤسسية (Corporate Events)</strong>
+                            <p class="text-kaaf-slateText">لقاءات الشركات، الاحتفالات السنوية، وفعاليات الموظفين والشركاء.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-1.5">
+                            <strong class="text-kaaf-goldLight block">المؤتمرات والمعارض</strong>
+                            <p class="text-kaaf-slateText">تجهيز الأجنحة، إدارة الحشود، وتنسيق الجلسات والمنصات.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-1.5">
+                            <strong class="text-kaaf-goldLight block">إطلاق المنتجات والعلامات التجارية</strong>
+                            <p class="text-kaaf-slateText">تصميم لحظات الإطلاق التي تصنع صدى إعلامياً وتجربة لا تُنسى.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-1.5">
+                            <strong class="text-kaaf-goldLight block">التغطيات والتوثيق الإعلامي</strong>
+                            <p class="text-kaaf-slateText">تصوير فوتوغرافي وفيديو احترافي يوثق الحدث بأعلى معايير الجودة.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-1.5">
+                            <strong class="text-kaaf-goldLight block">الحلول الإبداعية والإنتاجية</strong>
+                            <p class="text-kaaf-slateText">تصميم الهوية البصرية للحدث وتجهيز العناصر التفاعلية المصاحبة.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- P2 Content -->
+                <div id="content-p2" class="p-panel hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
+                        <div>
+                            <span class="text-xs font-bold text-kaaf-cyan uppercase">P2 — PRICE | هندسة القيمة والباقات</span>
+                            <h3 class="text-xl sm:text-2xl font-black text-white mt-1">تعظيم إدراك القيمة والابتعاد عن المنافسة السعرية</h3>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-kaaf-cyan/15 text-kaaf-cyanLight text-[11px] font-bold">استراتيجية بدون حرق أسعار</span>
+                    </div>
+
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        في قطاع الفعاليات، العميل المؤسسي لا يبحث عن الخيار الأرخص بقدر ما يبحث عن <strong class="text-white">الأمان التنفيذي وجودة التجربة</strong>. نساعد Tone Events على تطوير طريقة تقديم عروضها التجارية لتعكس هذه القيمة:
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2">
+                            <h4 class="font-bold text-kaaf-cyanLight">تنظيم الخدمات في باقات واضحة</h4>
+                            <p class="text-gray-300">تصميم مستويات متعددة (أساسية، متكاملة، تنفيذية) تناسب أحجام الفعاليات المختلفة وتسهل على العميل اختيار الأنسب.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2">
+                            <h4 class="font-bold text-kaaf-cyanLight">توضيح مخرجات كل باقة بدقة</h4>
+                            <p class="text-gray-300">بيان ما يحصل عليه العميل في كل مرحلة (التخطيط، التجهيز، الإدارة الميدانية، التوثيق) لتبرير القيمة الاستثمارية.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2">
+                            <h4 class="font-bold text-kaaf-cyanLight">إبراز جودة التجربة والالتزام</h4>
+                            <p class="text-gray-300">التركيز في الرسائل التسويقية على دقة المواعيد، احترافية الفريق، وحل المشكلات الميدانية قبل وقوعها.</p>
+                        </div>
+                        <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2">
+                            <h4 class="font-bold text-kaaf-cyanLight">تطوير هيكل عروض الأسعار التجارية</h4>
+                            <p class="text-gray-300">تقديم مقترحات تجارية احترافية تساعد مديري التسويق والمشتريات على اتخاذ قرار التعاقد بثقة وسرعة.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- P3 Content -->
+                <div id="content-p3" class="p-panel hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-white/10 pb-4">
+                        <div>
+                            <span class="text-xs font-bold text-kaaf-emerald uppercase">P3 — PLACE | قنوات الوصول والبنية الرقمية</span>
+                            <h3 class="text-xl sm:text-2xl font-black text-white mt-1">تأسيس حضور رقمي مؤسسي يربط صناع القرار بـ Tone Events</h3>
+                        </div>
+                    </div>
+
+                    <!-- Special Complimentary Website Initiative -->
+                    <div class="p-5 rounded-2xl bg-gradient-to-l from-kaaf-emerald/20 via-kaaf-emerald/10 to-transparent border border-kaaf-emerald/40 space-y-2">
+                        <div class="flex items-center gap-2 text-kaaf-emerald font-bold text-sm">
+                            <i class="fa-solid fa-star"></i>
+                            <span>مبادرة خاصة من KAAF: تطوير حل الموقع الإلكتروني لـ Tone Events دون مقابل</span>
+                        </div>
+                        <p class="text-xs text-gray-200 leading-relaxed">
+                            انطلاقاً من إيماننا بأن نجاح الحملات التسويقية يتطلب وجهة رقمية تليق بمستوى الشركة، تقدم KAAF تطوير حل الموقع الإلكتروني كـ <strong class="text-white">مبادرة استراتيجية لتأسيس بنية رقمية متكاملة</strong> تدعم استقبال العملاء وتوثيق الأعمال.
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+                        <div class="p-3.5 rounded-xl bg-black/40 border border-white/10 flex items-center gap-2.5">
+                            <i class="fa-solid fa-palette text-kaaf-emerald"></i>
+                            <span>واجهة احترافية تعكس هوية Tone Events</span>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-black/40 border border-white/10 flex items-center gap-2.5">
+                            <i class="fa-solid fa-sitemap text-kaaf-emerald"></i>
+                            <span>صفحات منظمة ومخصصة لكل خدمة</span>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-black/40 border border-white/10 flex items-center gap-2.5">
+                            <i class="fa-solid fa-images text-kaaf-emerald"></i>
+                            <span>معرض مشاريع وفعاليات سابقة (Portfolio)</span>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-black/40 border border-white/10 flex items-center gap-2.5">
+                            <i class="fa-solid fa-file-signature text-kaaf-emerald"></i>
+                            <span>نموذج ذكي لطلب عرض سعر وحجز اجتماع</span>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-black/40 border border-white/10 flex items-center gap-2.5">
+                            <i class="fa-solid fa-mobile-screen-button text-kaaf-emerald"></i>
+                            <span>تجربة مستخدم متجاوبة بالكامل مع الجوال</span>
+                        </div>
+                        <div class="p-3.5 rounded-xl bg-black/40 border border-white/10 flex items-center gap-2.5">
+                            <i class="fa-brands fa-google text-kaaf-emerald"></i>
+                            <span>تحسين الظهور في محركات البحث وGoogle Business</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- P4 Content -->
+                <div id="content-p4" class="p-panel hidden space-y-6">
+                    <div class="border-b border-white/10 pb-4">
+                        <span class="text-xs font-bold text-purple-400 uppercase">P4 — PROMOTION | محرك الانتشار والتفعيل البيعي</span>
+                        <h3 class="text-xl sm:text-2xl font-black text-white mt-1">منظومة ترويجية متكاملة تربط الإنتاج الإعلامي بالمبيعات</h3>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                        <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2">
+                            <h4 class="font-bold text-purple-300 flex items-center gap-2">
+                                <i class="fa-solid fa-film"></i>
+                                1. الإنتاج الإعلامي والتصوير (Content & Media)
+                            </h4>
+                            <p class="text-gray-300 leading-relaxed">
+                                تصوير وتغطية الفعاليات، صناعة Reels وTikTok احترافية، إبراز مراحل التجهيز والتنفيذ (Before & After عند توفر المواد)، وتسليط الضوء على خبرة الفريق.
+                            </p>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2">
+                            <h4 class="font-bold text-kaaf-cyanLight flex items-center gap-2">
+                                <i class="fa-solid fa-share-nodes"></i>
+                                2. استراتيجية منصات التواصل (Social Media)
+                            </h4>
+                            <p class="text-gray-300 leading-relaxed">
+                                خطة محتوى شهرية متوازنة تجمع بين استعراض الأعمال والمحتوى التعريفي والبيعي الموجه لصناع القرار عبر TikTok وInstagram بهوية متناسقة.
+                            </p>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2">
+                            <h4 class="font-bold text-kaaf-goldLight flex items-center gap-2">
+                                <i class="fa-solid fa-bullseye"></i>
+                                3. الحملات الإعلانية الممولة (Paid Advertising)
+                            </h4>
+                            <p class="text-gray-300 leading-relaxed">
+                                حملات لبناء الوعي، استهداف الشركات والجهات، إعادة استهداف المهتمين، وتوليد طلبات عروض الأسعار مع التركيز على جودة الـ Leads وليس المشاهدات فقط.
+                            </p>
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-kaaf-gold/15 border border-kaaf-gold/40 space-y-2">
+                            <h4 class="font-bold text-white flex items-center gap-2">
+                                <i class="fa-solid fa-headset text-kaaf-gold"></i>
+                                4. التفعيل والمتابعة البيعية (Sales Enablement)
+                            </h4>
+                            <p class="text-gray-200 leading-relaxed">
+                                <strong>نقطة التميز الجوهرية:</strong> فريق KAAF لا يترك العميل عند مرحلة الاستفسار، بل يتواصل مع صناع القرار ويتابع المهتمين ويؤهل الفرص حتى الوصول إلى اجتماع فعلي.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 08. WHAT KAAF BRINGS TO THE TABLE                                         -->
+        <!-- ========================================================================= -->
+        <section id="slide-8" class="space-y-6">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <div class="flex items-center gap-3">
+                    <span class="text-xs font-black text-kaaf-gold font-mono">08 / 14</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white">What KAAF Brings to the Table</h2>
+                </div>
+                <span class="text-xs text-kaaf-goldLight font-bold hidden sm:inline">القيمة الحصرية للشراكة</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Pillar 1 -->
+                <div class="editorial-card rounded-3xl p-7 flex items-start gap-5">
+                    <div class="w-12 h-12 rounded-2xl bg-kaaf-gold/15 border border-kaaf-gold/40 text-kaaf-gold flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-camera-retro"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <span class="text-[11px] font-mono text-kaaf-gold uppercase">01 • MEDIA PRODUCTION</span>
+                        <h3 class="text-lg font-bold text-white">Professional Photography & Event Coverage</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            توفير التصوير والتغطيات الاحترافية لأعمال وفعاليات Tone Events وتحويلها إلى مكتبة محتوى تسويقي رفيعة المستوى تعكس جودة التنفيذ الميداني.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Pillar 2 -->
+                <div class="editorial-card-cyan rounded-3xl p-7 flex items-start gap-5">
+                    <div class="w-12 h-12 rounded-2xl bg-kaaf-emerald/15 border border-kaaf-emerald/40 text-kaaf-emerald flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <span class="text-[11px] font-mono text-kaaf-emerald uppercase">02 • DIGITAL INFRASTRUCTURE</span>
+                        <h3 class="text-lg font-bold text-white">Complimentary Website Solution</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            تطوير حل الموقع الإلكتروني دون مقابل كمبادرة لتأسيس بنية رقمية احترافية تعرض خدمات الشركة وسابقة أعمالها وتسهل طلب عروض الأسعار.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Pillar 3 -->
+                <div class="editorial-card-cyan rounded-3xl p-7 flex items-start gap-5">
+                    <div class="w-12 h-12 rounded-2xl bg-kaaf-cyan/15 border border-kaaf-cyan/40 text-kaaf-cyan flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-phone-volume"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <span class="text-[11px] font-mono text-kaaf-cyan uppercase">03 • B2B CONVERSION</span>
+                        <h3 class="text-lg font-bold text-white">Dedicated Sales Follow-up</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            تخصيص فريق مبيعات يتولى التواصل مع الشركات المستهدفة ومتابعة الاستفسارات وتأهيل العملاء المحتملين للوصول إلى اجتماعات تجارية جادة.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Pillar 4 -->
+                <div class="editorial-card rounded-3xl p-7 flex items-start gap-5">
+                    <div class="w-12 h-12 rounded-2xl bg-purple-500/15 border border-purple-400/40 text-purple-400 flex items-center justify-center text-xl shrink-0">
+                        <i class="fa-solid fa-gears"></i>
+                    </div>
+                    <div class="space-y-2">
+                        <span class="text-[11px] font-mono text-purple-300 uppercase">04 • UNIFIED SYSTEM</span>
+                        <h3 class="text-lg font-bold text-white">Integrated Marketing Execution</h3>
+                        <p class="text-xs text-gray-300 leading-relaxed">
+                            الربط الكامل بين التصوير، وصناعة المحتوى، والحملات الإعلانية، والموقع الإلكتروني، والمتابعة البيعية ضمن منظومة تشغيلية واحدة متناغمة.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 09. INTERACTIVE CUSTOMER ACQUISITION JOURNEY                              -->
+        <!-- ========================================================================= -->
+        <section id="slide-9" class="space-y-6">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <div class="flex items-center gap-3">
+                    <span class="text-xs font-black text-kaaf-cyan font-mono">09 / 14</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white">رحلة اكتساب العميل التفاعلية (Customer Journey)</h2>
+                </div>
+                <span class="text-xs text-kaaf-slateText hidden sm:inline">اضغط على أي مرحلة لاستعراض تفاصيلها</span>
+            </div>
+
+            <div class="editorial-card-cyan rounded-3xl p-8 space-y-8">
+                <!-- 7 Interactive Stages -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2.5 text-center">
+                    <button onclick="selectStage(0)" class="journey-node active p-3.5 rounded-2xl border border-white/15 bg-black/40 transition cursor-pointer space-y-1.5">
+                        <span class="text-[10px] font-mono text-kaaf-cyan block">01</span>
+                        <i class="fa-solid fa-eye text-kaaf-cyan text-base"></i>
+                        <span class="block text-xs font-bold text-white">Awareness</span>
+                        <span class="block text-[10px] text-kaaf-slateText">الوعي</span>
+                    </button>
+
+                    <button onclick="selectStage(1)" class="journey-node p-3.5 rounded-2xl border border-white/15 bg-black/40 transition cursor-pointer space-y-1.5">
+                        <span class="text-[10px] font-mono text-kaaf-cyan block">02</span>
+                        <i class="fa-solid fa-play text-kaaf-cyan text-base"></i>
+                        <span class="block text-xs font-bold text-white">Interest</span>
+                        <span class="block text-[10px] text-kaaf-slateText">الاهتمام</span>
+                    </button>
+
+                    <button onclick="selectStage(2)" class="journey-node p-3.5 rounded-2xl border border-white/15 bg-black/40 transition cursor-pointer space-y-1.5">
+                        <span class="text-[10px] font-mono text-kaaf-cyan block">03</span>
+                        <i class="fa-solid fa-window-maximize text-kaaf-cyan text-base"></i>
+                        <span class="block text-xs font-bold text-white">Consideration</span>
+                        <span class="block text-[10px] text-kaaf-slateText">التقييم</span>
+                    </button>
+
+                    <button onclick="selectStage(3)" class="journey-node p-3.5 rounded-2xl border border-white/15 bg-black/40 transition cursor-pointer space-y-1.5">
+                        <span class="text-[10px] font-mono text-kaaf-gold block">04</span>
+                        <i class="fa-solid fa-file-invoice text-kaaf-gold text-base"></i>
+                        <span class="block text-xs font-bold text-white">Lead Gen</span>
+                        <span class="block text-[10px] text-kaaf-slateText">الاستفسار</span>
+                    </button>
+
+                    <button onclick="selectStage(4)" class="journey-node p-3.5 rounded-2xl border border-white/15 bg-black/40 transition cursor-pointer space-y-1.5">
+                        <span class="text-[10px] font-mono text-kaaf-gold block">05</span>
+                        <i class="fa-solid fa-headset text-kaaf-gold text-base"></i>
+                        <span class="block text-xs font-bold text-white">Follow-up</span>
+                        <span class="block text-[10px] text-kaaf-slateText">المتابعة</span>
+                    </button>
+
+                    <button onclick="selectStage(5)" class="journey-node p-3.5 rounded-2xl border border-white/15 bg-black/40 transition cursor-pointer space-y-1.5">
+                        <span class="text-[10px] font-mono text-kaaf-emerald block">06</span>
+                        <i class="fa-solid fa-calendar-check text-kaaf-emerald text-base"></i>
+                        <span class="block text-xs font-bold text-white">Meeting</span>
+                        <span class="block text-[10px] text-kaaf-slateText">الاجتماع</span>
+                    </button>
+
+                    <button onclick="selectStage(6)" class="journey-node p-3.5 rounded-2xl border border-white/15 bg-black/40 transition cursor-pointer space-y-1.5 col-span-2 sm:col-span-1">
+                        <span class="text-[10px] font-mono text-kaaf-emerald block">07</span>
+                        <i class="fa-solid fa-handshake text-kaaf-emerald text-base"></i>
+                        <span class="block text-xs font-bold text-white">Opportunity</span>
+                        <span class="block text-[10px] text-kaaf-slateText">الفرصة</span>
+                    </button>
+                </div>
+
+                <!-- Dynamic Stage Detail Box -->
+                <div id="stage-detail-box" class="p-6 rounded-2xl bg-black/50 border border-kaaf-cyan/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div class="space-y-1.5">
+                        <span id="stage-badge" class="text-[11px] font-mono font-bold text-kaaf-cyan">STAGE 01 • AWARENESS</span>
+                        <h4 id="stage-title" class="text-lg font-bold text-white">الوعي بالعلامة التجارية (Awareness)</h4>
+                        <p id="stage-desc" class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                            يتعرف صانع القرار في الشركات والجهات على Tone Events من خلال محتوى بصري احترافي وحملات إعلانية مستهدفة تبرز مستوى التنفيذ.
+                        </p>
+                    </div>
+                    <div class="shrink-0 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-kaaf-cyanLight font-bold" id="stage-owner">
+                        المسؤول: التسويق والمحتوى
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 10. SALES FOLLOW-UP & ENABLEMENT SYSTEM                                   -->
+        <!-- ========================================================================= -->
+        <section id="slide-10" class="space-y-6">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <div class="flex items-center gap-3">
+                    <span class="text-xs font-black text-kaaf-gold font-mono">10 / 14</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white">منظومة المتابعة البيعية وتحويل الفرص (Sales Follow-up)</h2>
+                </div>
+                <span class="text-xs text-kaaf-slateText hidden sm:inline">Closing the Marketing-Sales Gap</span>
+            </div>
+
+            <div class="editorial-card rounded-3xl p-8 space-y-6">
+                <div class="p-5 rounded-2xl bg-kaaf-gold/10 border border-kaaf-gold/30">
+                    <p class="text-sm sm:text-base font-bold text-white leading-relaxed">
+                        "نحن لا نترك العميل المحتمل عند مرحلة الاستفسار؛ بل نعمل على تحويل الاهتمام إلى فرصة تجارية واجتماع فعلي."
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5 text-xs">
+                    <div class="p-5 rounded-2xl bg-black/40 border border-white/10 space-y-2.5">
+                        <i class="fa-solid fa-building-user text-kaaf-gold text-xl"></i>
+                        <h4 class="font-bold text-white text-sm">استهداف وتواصل استباقي</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            تحديد الشركات والجهات المستهدفة، والوصول إلى صناع القرار في إدارات التسويق والاتصال المؤسسي لتعريفهم بقدرات Tone Events.
+                        </p>
+                    </div>
+
+                    <div class="p-5 rounded-2xl bg-black/40 border border-white/10 space-y-2.5">
+                        <i class="fa-solid fa-filter-circle-dollar text-kaaf-cyan text-xl"></i>
+                        <h4 class="font-bold text-white text-sm">تأهيل الفرص التجارية (Qualification)</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            التواصل السريع مع كل استفسار وارد، فهم نوع الفعالية المطلوبة وتوقيتها، وتأهيل جدية الفرصة قبل تنسيق الاجتماع.
+                        </p>
+                    </div>
+
+                    <div class="p-5 rounded-2xl bg-black/40 border border-white/10 space-y-2.5">
+                        <i class="fa-solid fa-clipboard-list text-kaaf-emerald text-xl"></i>
+                        <h4 class="font-bold text-white text-sm">تنظيم البيانات وتقارير الاجتماعات</h4>
+                        <p class="text-gray-300 leading-relaxed">
+                            توثيق جميع مراحل التواصل وبيانات العملاء المحتملين، وتقديم تقارير دورية توضح الاجتماعات المجدولة والفرص قيد المتابعة.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 11. 90-DAY EXECUTION ROADMAP                                              -->
+        <!-- ========================================================================= -->
+        <section id="slide-11" class="space-y-6">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <div class="flex items-center gap-3">
+                    <span class="text-xs font-black text-kaaf-cyan font-mono">11 / 14</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white">خارطة الطريق التنفيذية (90-Day Roadmap)</h2>
+                </div>
+                <span class="text-xs text-kaaf-slateText hidden sm:inline">Phased Implementation Plan</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Phase 1 -->
+                <div class="editorial-card rounded-3xl p-7 space-y-4 relative overflow-hidden">
+                    <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                        <span class="text-xs font-mono font-bold text-kaaf-gold">DAYS 01 – 30</span>
+                        <span class="px-2.5 py-0.5 rounded-full bg-kaaf-gold/15 text-kaaf-goldLight text-[10px] font-bold">PHASE 1</span>
+                    </div>
+                    <h3 class="text-lg font-black text-white">Foundation | التأسيس والبنية</h3>
+                    <ul class="space-y-2.5 text-xs text-gray-300">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kaaf-gold mt-0.5"></i> <span>تحليل وضع الشركة الحالي والخدمات.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kaaf-gold mt-0.5"></i> <span>مراجعة الهوية وأرشيف المحتوى والأعمال.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kaaf-gold mt-0.5"></i> <span>تطوير تصور وتصميم الموقع الإلكتروني.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kaaf-gold mt-0.5"></i> <span>تحديد الشرائح والجمهور المستهدف (B2B).</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kaaf-gold mt-0.5"></i> <span>إعداد الاستراتيجية وخطة المحتوى.</span></li>
+                    </ul>
+                </div>
+
+                <!-- Phase 2 -->
+                <div class="editorial-card-cyan rounded-3xl p-7 space-y-4 relative overflow-hidden">
+                    <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                        <span class="text-xs font-mono font-bold text-kaaf-cyan">DAYS 31 – 60</span>
+                        <span class="px-2.5 py-0.5 rounded-full bg-kaaf-cyan/15 text-kaaf-cyanLight text-[10px] font-bold">PHASE 2</span>
+                    </div>
+                    <h3 class="text-lg font-black text-white">Activation | الإطلاق والتفعيل</h3>
+                    <ul class="space-y-2.5 text-xs text-gray-300">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kaaf-cyan mt-0.5"></i> <span>بدء التصوير والتغطيات الاحترافية للفعاليات.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kaaf-cyan mt-0.5"></i> <span>إطلاق المحتوى عبر المنصات المختارة.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kaaf-cyan mt-0.5"></i> <span>تشغيل الحملات الإعلانية الموجهة.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kaaf-cyan mt-0.5"></i> <span>تفعيل صفحات الخدمات والموقع الإلكتروني.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kaaf-cyan mt-0.5"></i> <span>بدء عمليات التواصل البيعي والمتابعة.</span></li>
+                    </ul>
+                </div>
+
+                <!-- Phase 3 -->
+                <div class="editorial-card rounded-3xl p-7 space-y-4 relative overflow-hidden">
+                    <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                        <span class="text-xs font-mono font-bold text-kaaf-emerald">DAYS 61 – 90</span>
+                        <span class="px-2.5 py-0.5 rounded-full bg-kaaf-emerald/15 text-kaaf-emerald text-[10px] font-bold">PHASE 3</span>
+                    </div>
+                    <h3 class="text-lg font-black text-white">Growth & Optimization | النمو</h3>
+                    <ul class="space-y-2.5 text-xs text-gray-300">
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kaaf-emerald mt-0.5"></i> <span>تحليل أداء الحملات والوصول الرقمي.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kaaf-emerald mt-0.5"></i> <span>تقييم جودة العملاء المحتملين (Lead Quality).</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kaaf-emerald mt-0.5"></i> <span>تطوير الرسائل التسويقية والبيعية.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kaaf-emerald mt-0.5"></i> <span>تحسين معدلات التحويل إلى اجتماعات.</span></li>
+                        <li class="flex items-start gap-2"><i class="fa-solid fa-check text-kaaf-emerald mt-0.5"></i> <span>مراجعة الفرص التجارية وتحديد مسارات التوسع.</span></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 12. KPIs & MEASUREMENT                                                    -->
+        <!-- ========================================================================= -->
+        <section id="slide-12" class="space-y-6">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <div class="flex items-center gap-3">
+                    <span class="text-xs font-black text-kaaf-gold font-mono">12 / 14</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white">مؤشرات قياس الأداء والحوكمة (KPIs & Measurement)</h2>
+                </div>
+                <span class="text-xs text-kaaf-slateText hidden sm:inline">Transparent Performance Tracking</span>
+            </div>
+
+            <div class="editorial-card rounded-3xl p-8 space-y-6">
+                <p class="text-sm text-gray-300 leading-relaxed">
+                    نعتمد في <strong class="text-white">KAF Group</strong> على مؤشرات قياس عملية تقيس الأثر التجاري الفعلي بدلاً من الاكتفاء بالأرقام السطحية، دون وضع وعود مسبقة بأرقام غير مستندة لبيانات تاريخية:
+                </p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+                    <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2">
+                        <i class="fa-solid fa-user-check text-kaaf-gold text-lg"></i>
+                        <h4 class="font-bold text-white">Qualified Leads</h4>
+                        <p class="text-kaaf-slateText">عدد العملاء المحتملين المؤهلين الذين يمتلكون احتياجاً فعلياً لتنظيم فعالية.</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2">
+                        <i class="fa-solid fa-handshake-angle text-kaaf-cyan text-lg"></i>
+                        <h4 class="font-bold text-white">Scheduled Meetings</h4>
+                        <p class="text-kaaf-slateText">عدد الاجتماعات التجارية المجدولة مع صناع القرار والشركات المستهدفة.</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2">
+                        <i class="fa-solid fa-arrow-pointer text-kaaf-emerald text-lg"></i>
+                        <h4 class="font-bold text-white">Website & Quote Requests</h4>
+                        <p class="text-kaaf-slateText">حركة الزيارات المستهدفة للموقع الإلكتروني وطلبات عروض الأسعار الواردة.</p>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-black/40 border border-white/10 space-y-2">
+                        <i class="fa-solid fa-percent text-purple-400 text-lg"></i>
+                        <h4 class="font-bold text-white">Conversion Rates</h4>
+                        <p class="text-kaaf-slateText">نسب تحول الاستفسارات إلى اجتماعات وفرص تجارية جادة قابلة للتعاقد.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 13. PARTNERSHIP VISION                                                    -->
+        <!-- ========================================================================= -->
+        <section id="slide-13" class="space-y-6">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                <div class="flex items-center gap-3">
+                    <span class="text-xs font-black text-kaaf-cyan font-mono">13 / 14</span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-white">رؤية الشراكة: تكامل الأدوار لتحقيق النمو</h2>
+                </div>
+                <span class="text-xs text-kaaf-slateText hidden sm:inline">Partnership Synergy</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="editorial-card rounded-3xl p-8 space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-white text-xs font-bold">
+                        <span>دور Tone Events</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">التركيز على الإبداع وجودة التنفيذ</h3>
+                    <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                        تتفرغ قيادة وفريق <strong class="text-white">Tone Events</strong> لما تتقنه بأعلى احترافية: ابتكار التجارب، إدارة الفعاليات الميدانية، وإبهار العملاء في كل حدث، مع مشاركة مواد الأعمال لإبرازها.
+                    </p>
+                </div>
+
+                <div class="editorial-card-cyan rounded-3xl p-8 space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-kaaf-gold/20 text-kaaf-goldLight text-xs font-bold">
+                        <span>دور KAAF Group</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white">بناء الحضور الرقمي واستقطاب الفرص</h3>
+                    <p class="text-xs sm:text-sm text-gray-300 leading-relaxed">
+                        تتولى <strong class="text-kaaf-goldLight">KAAF Group</strong> تحويل تلك الإنجازات إلى حضور رقمي قوي، وتأسيس الموقع الإلكتروني، وإدارة الحملات، ومتابعة العملاء المحتملين حتى طاولة الاجتماعات.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================================= -->
+        <!-- 14. CLOSING SLIDE                                                         -->
+        <!-- ========================================================================= -->
+        <section id="slide-14" class="editorial-card rounded-[32px] p-10 sm:p-16 text-center space-y-8 relative overflow-hidden shadow-luxury">
+            <div class="absolute top-0 right-0 left-0 h-1 bg-gradient-to-l from-kaaf-gold via-kaaf-goldLight to-kaaf-cyan"></div>
+
+            <div class="max-w-3xl mx-auto space-y-5">
+                <div class="w-14 h-14 rounded-2xl bg-kaaf-gold/15 border border-kaaf-gold/40 text-kaaf-gold flex items-center justify-center text-2xl mx-auto">
+                    <i class="fa-solid fa-sparkles"></i>
+                </div>
+
+                <h2 class="text-2xl sm:text-4xl font-black text-white leading-relaxed">
+                    "Tone Events تصنع تجارب تستحق أن تُرى وتُتذكر، ودور KAAF أن يجعل هذه التجارب تتحول إلى حضور أقوى، ووصول أوسع، وفرص تجارية جديدة."
+                </h2>
+
+                <div class="pt-4 space-y-1">
+                    <div class="text-lg sm:text-2xl font-black tracking-wider text-kaaf-goldLight font-heading">
+                        KAAF × TONE EVENTS
+                    </div>
+                    <p class="text-xs sm:text-sm font-mono text-kaaf-cyanLight tracking-widest uppercase">
+                        Beyond Events. Towards Growth.
+                    </p>
+                </div>
+            </div>
+
+            <div class="pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="https://wa.me/966579346395?text=السلام%20عليكم،%20نرغب%20في%20تحديد%20اجتماع%20لمناقشة%20عرض%20الشراكة%20بين%20KAAF%20و%20Tone%20Events" target="_blank" class="px-8 py-4 rounded-2xl bg-gradient-to-l from-kaaf-gold to-amber-500 text-kaaf-obsidian font-black text-xs sm:text-sm hover:brightness-110 transition shadow-gold-glow flex items-center gap-2.5">
+                    <i class="fa-brands fa-whatsapp text-lg"></i>
+                    <span>تحديد اجتماع مناقشة الشراكة</span>
+                </a>
+                <a href="https://kaafmarketing.sa/" target="_blank" class="px-7 py-4 rounded-2xl bg-white/5 border border-white/15 text-white font-bold text-xs sm:text-sm hover:bg-white/10 transition flex items-center gap-2">
+                    <i class="fa-solid fa-globe text-kaaf-cyan"></i>
+                    <span>زيارة موقع KAAF Group</span>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 bg-kaaf-obsidian/95 py-8 text-xs text-kaaf-slateText mt-16 relative z-10">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg overflow-hidden bg-black border border-kaaf-gold/40 p-0.5">
+                    <img src="https://i.ibb.co/qKTyhpv/Whats-App-Image-2026-08-26-at-11-29-58.jpg" alt="KAAF Group" class="w-full h-full object-cover rounded">
+                </div>
+                <div>
+                    <span class="block font-bold text-white">KAAF Group</span>
+                    <span class="block text-[10px]">Strategic Marketing & Business Growth Consultancy</span>
+                </div>
+            </div>
+
+            <div class="text-center md:text-right">
+                <span class="block font-semibold text-gray-300">عرض شراكة استراتيجية — KAAF × Tone Events</span>
+                <span class="block text-[11px]">للتواصل المباشر: <span dir="ltr" class="font-mono text-gray-200">+966 57 934 6395</span></span>
+            </div>
+
+            <div class="font-mono text-[10px]">
+                &copy; KAAF Group. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Logic Script -->
+    <script>
+        // 1. 4Ps Interactive Tabs
+        function switchP(pId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active', 'text-white');
+                btn.classList.add('text-gray-300');
+            });
+            const activeBtn = document.getElementById('btn-' + pId);
+            activeBtn.classList.add('active');
+            activeBtn.classList.remove('text-gray-300');
+
+            document.querySelectorAll('.p-panel').forEach(panel => {
+                panel.classList.add('hidden');
+            });
+            document.getElementById('content-' + pId).classList.remove('hidden');
+        }
+
+        // 2. Customer Journey Interactive Nodes
+        const journeyStages = [
+            {
+                badge: 'STAGE 01 • AWARENESS',
+                title: 'الوعي بالعلامة التجارية (Awareness)',
+                desc: 'يتعرف صانع القرار في الشركات والجهات على Tone Events من خلال محتوى بصري احترافي وحملات إعلانية مستهدفة تبرز مستوى التنفيذ.',
+                owner: 'المسؤول: التسويق والمحتوى'
+            },
+            {
+                badge: 'STAGE 02 • INTEREST',
+                title: 'الاهتمام واستكشاف الأعمال (Interest)',
+                desc: 'يشاهد العميل المحتمل مقاطع الفيديو والتغطيات الميدانية وكواليس التجهيز عبر TikTok وInstagram مما يعزز فضوله وثقته.',
+                owner: 'المسؤول: الإنتاج الإعلامي'
+            },
+            {
+                badge: 'STAGE 03 • CONSIDERATION',
+                title: 'التقييم وزيارة المنصة الرقمية (Consideration)',
+                desc: 'ينتقل العميل إلى الموقع الإلكتروني الجديد لاستعراض باقات الخدمات وسابقة الأعمال وفهم القيمة المضافة لـ Tone Events.',
+                owner: 'المسؤول: الموقع الإلكتروني (UX)'
+            },
+            {
+                badge: 'STAGE 04 • LEAD GENERATION',
+                title: 'توليد الطلب أو الاستفسار (Lead Generation)',
+                desc: 'يرسل العميل طلب عرض سعر أو استفساراً عن تنظيم فعالية قادمة عبر نموذج الموقع أو قنوات التواصل المعتمدة.',
+                owner: 'المسؤول: مسارات التحويل'
+            },
+            {
+                badge: 'STAGE 05 • SALES FOLLOW-UP',
+                title: 'المتابعة والتأهيل البيعي (Sales Follow-up)',
+                desc: 'يتواصل فريق KAAF مع العميل بسرعة واحترافية لفهم تفاصيل الحدث وتأهيل جدية الفرصة دون ترك أي استفسار معلقاً.',
+                owner: 'المسؤول: فريق مبيعات KAAF'
+            },
+            {
+                badge: 'STAGE 06 • MEETING',
+                title: 'تحديد الاجتماع التجاري (Meeting)',
+                desc: 'تحويل الاهتمام المؤهل إلى اجتماع رسمي يجمع صاحب القرار مع فريق Tone Events لمناقشة التصور الفني والتجاري.',
+                owner: 'المسؤول: تنسيق الأعمال'
+            },
+            {
+                badge: 'STAGE 07 • OPPORTUNITY',
+                title: 'تطوير الفرصة التجارية (Opportunity)',
+                desc: 'متابعة العرض التجاري بعد الاجتماع وتوثيق حالة الفرصة لتحويلها إلى شراكة وتعاون فعلي مستدام.',
+                owner: 'المسؤول: KAAF × Tone Events'
+            }
+        ];
+
+        function selectStage(index) {
+            const nodes = document.querySelectorAll('.journey-node');
+            nodes.forEach((node, idx) => {
+                if (idx === index) {
+                    node.classList.add('active');
+                } else {
+                    node.classList.remove('active');
+                }
+            });
+
+            const data = journeyStages[index];
+            document.getElementById('stage-badge').textContent = data.badge;
+            document.getElementById('stage-title').textContent = data.title;
+            document.getElementById('stage-desc').textContent = data.desc;
+            document.getElementById('stage-owner').textContent = data.owner;
+        }
+
+        // 3. Scroll Progress & Active Side Dot Observer
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('reading-progress').style.width = scrolled + '%';
+
+            const sections = document.querySelectorAll('section[id^="slide-"]');
+            const dots = document.querySelectorAll('.side-dot');
+            let currentId = 'slide-1';
+
+            sections.forEach(sec => {
+                const top = sec.offsetTop - 220;
+                if (winScroll >= top) {
+                    currentId = sec.getAttribute('id');
+                }
+            });
+
+            dots.forEach(dot => {
+                dot.classList.remove('active');
+                if (dot.getAttribute('data-target') === currentId) {
+                    dot.classList.add('active');
+                }
+            });
+        });
+
+        // 4. Subtle Ambient Particle Network Canvas
+        (function() {
+            const canvas = document.getElementById('ambient-canvas');
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+            const count = 38;
+            const colors = ['#D4AF37', '#00B4D8', '#F3D982'];
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.vx = (Math.random() - 0.5) * 0.45;
+                    this.vy = (Math.random() - 0.5) * 0.45;
+                    this.r = Math.random() * 1.8 + 0.8;
+                    this.color = colors[Math.floor(Math.random() * colors.length)];
+                    this.alpha = Math.random() * 0.35 + 0.15;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    if (this.x < 0 || this.x > width) this.vx *= -1;
+                    if (this.y < 0 || this.y > height) this.vy *= -1;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.globalAlpha = this.alpha;
+                    ctx.fill();
+                }
+            }
+
+            function init() {
+                resize();
+                particles = Array.from({ length: count }, () => new Particle());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                for (let i = 0; i < particles.length; i++) {
+                    particles[i].update();
+                    particles[i].draw();
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 140) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = '#D4AF37';
+                            ctx.globalAlpha = (1 - dist / 140) * 0.12;
+                            ctx.stroke();
+                        }
+                    }
+                }
+                requestAnimationFrame(animate);
+            }
+
+            window.onload = () => {
+                init();
+                animate();
+            };
+        })();
+    </script>
+</body>
+</html>
